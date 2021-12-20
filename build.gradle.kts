@@ -7,6 +7,7 @@ plugins {
 
 group = "kr.kro.minestar"
 version = "1.0.0"
+val plugins = File("C:\\Users\\MineStar\\Desktop\\MC Server folder\\MCserver 1.17.1 - vanilla\\plugins")
 
 repositories {
     mavenCentral()
@@ -25,7 +26,7 @@ dependencies {
     //project_TL
 
     //MineStar
-    implementation("kr.kro.minestar:Utility-API:1.4.0")
+    implementation("kr.kro.minestar:Utility-API:1.5.4")
 }
 
 tasks {
@@ -59,7 +60,6 @@ tasks {
             // jar file copy
             copy {
                 from(archiveFile)
-                val plugins = File("C:\\Users\\MineStar\\Desktop\\MC Server folder\\MCserver 1.17.1 - vanilla\\plugins")
                 into(if (File(plugins, archiveFileName.get()).exists()) plugins else plugins)
             }
         }

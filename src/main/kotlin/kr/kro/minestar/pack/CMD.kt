@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 
-class CMD : CommandExecutor, TabCompleter {
+object CMD : CommandExecutor, TabCompleter {
     private val args0 = listOf("cmd1", "cmd2", "cmd3")
     override fun onCommand(player: CommandSender, cmd: Command, label: String, args: Array<out String>): Boolean {
         if (player !is Player) return false
