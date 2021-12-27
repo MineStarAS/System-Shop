@@ -1,5 +1,6 @@
 package kr.kro.minestar.pack
 
+import kr.kro.minestar.pack.Main.Companion.prefix
 import kr.kro.minestar.utility.string.toPlayer
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -12,8 +13,11 @@ object CMD : CommandExecutor, TabCompleter {
 
     override fun onCommand(player: CommandSender, cmd: Command, label: String, args: Array<out String>): Boolean {
         if (player !is Player) return false
-        if (args.isEmpty()) "CMD".toPlayer(player).also { return false }
-        when (args[0]) {
+        if (args.isEmpty()) {
+            "$prefix $label".toPlayer(player)
+            return false
+        }
+        when (args.first()) {
             Arg.cmd1.name -> {}
             Arg.cmd2.name -> {}
             Arg.cmd3.name -> {}
@@ -28,7 +32,7 @@ object CMD : CommandExecutor, TabCompleter {
             for (v in enumValues<Arg>()) arg.add(v.name)
             for (s in arg) if (s.contains(args.last())) list.add(s)
         }
-        if (args.size > 1) when (args[0]) {
+        if (args.size > 1) when (args.first()) {
             Arg.cmd1.name -> {}
             Arg.cmd2.name -> {}
             Arg.cmd3.name -> {}
