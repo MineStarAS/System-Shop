@@ -27,10 +27,8 @@ object CMD : CommandExecutor, TabCompleter {
 
     override fun onTabComplete(p: CommandSender, cmd: Command, alias: String, args: Array<out String>): MutableList<String> {
         val list = mutableListOf<String>()
-        val arg = mutableListOf<String>()
         if (args.size == 1) {
-            for (v in enumValues<Arg>()) arg.add(v.name)
-            for (s in arg) if (s.contains(args.last())) list.add(s)
+            for (s in Arg.values()) if (s.name.contains(args.last())) list.add(s.name)
         }
         if (args.size > 1) when (args.first()) {
             Arg.cmd1.name -> {}

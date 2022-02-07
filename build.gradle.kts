@@ -26,7 +26,7 @@ dependencies {
     //project_TL
 
     //MineStar
-    implementation("kr.kro.minestar:Utility-API:1.5.10")
+    implementation("kr.kro.minestar:Utility-API:1.5.18")
 }
 
 tasks {
