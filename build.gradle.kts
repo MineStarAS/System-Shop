@@ -26,7 +26,7 @@ dependencies {
     //project_TL
 
     //MineStar
-    implementation("kr.kro.minestar:Utility-API:1.6.1")
+    implementation("kr.kro.minestar:Utility-API:1.6.2")
 }
 
 java {
