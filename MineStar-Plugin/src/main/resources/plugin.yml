@@ -1,6 +1,6 @@
 name: ${project.name}
 version: ${project.version}
-main: kr.kro.minestar.pack.Main
+main: Main
 api-version: 1.17
 authors: [ MineStar ]
 commands:
