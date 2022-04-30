@@ -11,7 +11,7 @@ class Main : JavaPlugin() {
     override fun onEnable() {
         pl = this
         logger.info("$prefix §aEnable")
-        getCommand("cmd")?.setExecutor(CMD)
+        getCommand("cmd")?.setExecutor(Command)
     }
 
     override fun onDisable() {
