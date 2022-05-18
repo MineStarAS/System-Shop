@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.6.10"
     id("com.github.johnrengelman.shadow") version "7.1.0"
+    `maven-publish`
 }
 
 group = "kr.kro.minestar"
@@ -12,6 +13,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        maven(url = "https://jitpack.io/")
     }
 
     java {
@@ -26,7 +28,7 @@ subprojects {
         maven(url = "https://oss.sonatype.org/content/repositories/snapshots/") {
             name = "sonatype-oss-snapshots"
         }
-        maven("https://repo.projecttl.net/repository/maven-public/")
+        maven(url = "https://jitpack.io/")
     }
 
     dependencies {
@@ -37,6 +39,5 @@ subprojects {
         //project_TL
 
         //MineStar
-        implementation("kr.kro.minestar:Utility-API:1.0.7")
     }
 }

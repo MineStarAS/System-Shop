@@ -1,10 +1,10 @@
 group = "kr.kro.minestar"
 version = "1.0.0"
 
-val plugins = File("C:\\Users\\MineStar\\Desktop\\MC Server folder\\MCserver 1.18.1 - vanilla\\plugins")
+val copyPath = File("C:\\Users\\MineStar\\Desktop\\MC Server folder\\MCserver 1.18.1 - vanilla\\plugins")
 
 tasks {
-    compileKotlin{
+    compileKotlin {
         kotlinOptions.jvmTarget = "17"
     }
 
@@ -22,7 +22,7 @@ tasks {
             // jar file copy
             copy {
                 from(archiveFile)
-                into(if (File(plugins, archiveFileName.get()).exists()) plugins else plugins)
+                into(if (File(copyPath, archiveFileName.get()).exists()) copyPath else copyPath)
             }
         }
     }

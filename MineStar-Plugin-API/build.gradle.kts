@@ -38,49 +38,9 @@ tasks {
 
 publishing {
     publications {
-        create<MavenPublication>("${rootProject.name}-api") {
-            from(components["java"])
+        create<MavenPublication>(project.name) {
             artifact(tasks["sourcesJar"])
-            artifact(tasks["javadocJar"])
-
-            repositories {
-                maven {
-                    name = "MavenCentral"
-                    val releasesRepoUrl = "https://repo.projecttl.net/repository/maven-releases/"
-                    val snapshotsRepoUrl = "https://repo.projecttl.net/repository/maven-snapshots/"
-                    url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
-
-                    credentials.runCatching {
-                        username = project.properties["username"] as String?
-                        password = project.properties["password"] as String?
-                    }
-                }
-
-                pom {
-                    val repository = rootProject.name
-                    name.set(repository)
-                    description.set("This is MineStar's $repository plugin")
-                    url.set("https://github.com/MineStarAS/$repository")
-                    licenses {
-                        license {
-                            name.set("GNU GENERAL PUBLIC LICENSE Version 3")
-                            url.set("https://www.gnu.org/licenses/gpl-3.0.txt")
-                        }
-                    }
-                    developers {
-                        developer {
-                            id.set("MineStarAS")
-                            name.set("MineStar")
-                            email.set("band1019@naver.com")
-                        }
-                    }
-                    scm {
-                        connection.set("scm:git:https://github.com/MineStarAS/$repository.git")
-                        developerConnection.set("scm:git:https://github.com/MineStarAS/$repository.git")
-                        url.set("https://github.com/MineStarAS/$repository.git")
-                    }
-                }
-            }
+            from(components["java"])
         }
     }
 }
