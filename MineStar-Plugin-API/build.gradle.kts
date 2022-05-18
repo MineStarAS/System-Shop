@@ -12,7 +12,6 @@ repositories {
     maven(url = "https://oss.sonatype.org/content/repositories/snapshots/") {
         name = "sonatype-oss-snapshots"
     }
-    maven("https://repo.projecttl.net/repository/maven-public/")
 }
 
 dependencies {

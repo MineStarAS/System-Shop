@@ -21,12 +21,14 @@ object Command : FunctionalCommand {
         test(""),
     }
 
-    override fun onCommand(player: CommandSender, cmd: Command, label: String, args: Array<out String>): Boolean {
-        if (player !is Player) return false
+    override fun commanding(player: CommandSender, cmd: Command, label: String, args: Array<out String>) {
+        if (player !is Player) return
 
-        if (args.isEmpty()) return "$prefix $label".toPlayer(player).setFalse()
+        if (args.isEmpty()) return "$prefix $label".toPlayer(player)
 
-        val arg = argument(Arg.values(), args) ?: if (player.isOp) argument(OpArg.values(), args) else return false
+        val arg = argument(Arg.values(), args) ?: if (player.isOp) argument(OpArg.values(), args) ?: return else return
+
+        if (!arg.isValid(args)) return "$prefix §c${arg.howToUse(label)}".toPlayer(player)
 
         when (arg) {
             Arg.cmd1 -> {}
@@ -35,7 +37,7 @@ object Command : FunctionalCommand {
 
             OpArg.test -> {}
         }
-        return false
+        return
     }
 
     override fun onTabComplete(player: CommandSender, cmd: Command, alias: String, args: Array<out String>): List<String> {
