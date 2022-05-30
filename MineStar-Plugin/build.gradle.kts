@@ -18,6 +18,7 @@ tasks {
         archiveBaseName.set(project.name)
         archiveClassifier.set("")
         archiveVersion.set(project.version.toString())
+        archivePath.delete()
         doLast {
             // jar file copy
             copy {
