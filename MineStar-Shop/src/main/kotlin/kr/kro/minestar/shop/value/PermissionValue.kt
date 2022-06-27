@@ -1,6 +1,6 @@
-package kr.kro.minestar.pack.value
+package kr.kro.minestar.shop.value
 
-import kr.kro.minestar.pack.Command.plugin
+import kr.kro.minestar.shop.Command.plugin
 import kr.kro.minestar.utility.command.ArgumentPermission
 
 object PermissionValue {

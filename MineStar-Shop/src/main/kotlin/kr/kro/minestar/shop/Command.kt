@@ -1,7 +1,7 @@
-package kr.kro.minestar.pack
+package kr.kro.minestar.shop
 
-import kr.kro.minestar.pack.function.ConfigClass
-import kr.kro.minestar.pack.value.PermissionValue
+import kr.kro.minestar.shop.function.ConfigClass
+import kr.kro.minestar.shop.value.PermissionValue
 import kr.kro.minestar.utility.command.*
 import kr.kro.minestar.utility.string.toPlayer
 

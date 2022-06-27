@@ -1,4 +1,4 @@
-package kr.kro.minestar.pack
+package kr.kro.minestar.shop
 
 import kr.kro.minestar.utility.item.Head
 import kr.kro.minestar.utility.main.FunctionalJavaPlugin
@@ -12,10 +12,10 @@ class Main : FunctionalJavaPlugin() {
 
     override fun onEnable() {
         plugin = this
-        prefix = "§9Plugin"
+        prefix = "§Shop"
         head = Head(this)
 //        saveResource("headItem.yml", true)
-        getCommand("currency")?.setExecutor(Command)
+        getCommand("shop")?.setExecutor(Command)
     }
 
     override fun onDisable() {

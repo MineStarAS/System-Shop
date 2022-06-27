@@ -1,6 +1,6 @@
-package kr.kro.minestar.pack.function.event
+package kr.kro.minestar.shop.function.event
 
-import kr.kro.minestar.pack.Main.Companion.plugin
+import kr.kro.minestar.shop.Main.Companion.plugin
 import kr.kro.minestar.utility.event.enable
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

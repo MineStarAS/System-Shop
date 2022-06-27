@@ -40,5 +40,6 @@ subprojects {
 
         //MineStar
         implementation("com.github.MineStarAS:Utility-API:1.2.6")
+        implementation("com.github.MineStarAS:System-Currency-API:1.0.0")
     }
 }
