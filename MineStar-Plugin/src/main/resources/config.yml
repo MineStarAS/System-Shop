@@ -1,0 +1,3 @@
+# If it's true, it simply distinguishes whether it is Op or not.
+# If it's false, it is classified according to permission.
+simplePermission : true
