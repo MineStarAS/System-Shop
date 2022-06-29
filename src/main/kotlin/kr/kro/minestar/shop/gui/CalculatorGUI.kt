@@ -2,7 +2,6 @@ package kr.kro.minestar.shop.gui
 
 import kr.kro.minestar.shop.Main
 import kr.kro.minestar.shop.Main.Companion.head
-import kr.kro.minestar.shop.functions.gui.Custom
 import kr.kro.minestar.utility.gui.GUI
 import kr.kro.minestar.utility.inventory.InventoryUtil
 import kr.kro.minestar.utility.item.Slot
@@ -18,7 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
 class CalculatorGUI(
-    override val player: Player, private val targetPlayer: Player, private val custom: Custom
+    override val player: Player, private val commodityItemEditGUI: CommodityItemEditGUI , private val editType: CommodityItemEditGUI.EditType
 ) : GUI() {
 
     private enum class DisplayNumber(override val line: Int, override val number: Int, override val item: ItemStack) : Slot {
@@ -203,20 +202,8 @@ class CalculatorGUI(
     }
 
     private fun complete() {
-        if (isBuy) {
-            if (custom.sellPrice == null) custom.buyPrice = disInt
-            else if (disInt < custom.sellPrice!!) {
-                custom.buyPrice = custom.sellPrice
-                "$prefix §c구매 가격이 판매 가격보다 낮을 수 없습니다.".toPlayer(player)
-            } else custom.buyPrice = disInt
-        } else {
-            if (custom.buyPrice == null) custom.sellPrice = disInt
-            else if (custom.buyPrice!! < disInt) {
-                custom.sellPrice = custom.buyPrice
-                "$prefix §c판매 가격이 구매 가격보다 높을 수 없습니다.".toPlayer(player)
-            } else custom.sellPrice = disInt
-        }
-        custom.openGUI()
+        commodityItemEditGUI.edit(currentLong, editType)
+        commodityItemEditGUI.openGUI()
     }
 
     init {

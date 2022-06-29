@@ -1,6 +1,7 @@
 package kr.kro.minestar.shop
 
 import kr.kro.minestar.shop.function.ConfigClass
+import kr.kro.minestar.shop.gui.ShopListGUI
 import kr.kro.minestar.shop.value.PermissionValue
 import kr.kro.minestar.utility.command.*
 import kr.kro.minestar.utility.string.toPlayer
@@ -8,9 +9,8 @@ import kr.kro.minestar.utility.string.toPlayer
 object Command : FunctionalCommand {
 
     enum class Arg : Argument {
-        cmd1(listOf("커맨드1"), "<ValueType>", ArgumentPermission()),
-        cmd2(listOf("커맨드2"), "<ValueType> [Value1/Value2]", PermissionValue.default),
-        cmd3(listOf("커맨드3"), "<ValueType> [Value1/Value2] {Value}", PermissionValue.admin),
+        list(listOf("목록"), "", ArgumentPermission()),
+        create(listOf("생성"), "<ShopName>", ArgumentPermission()),
         ;
 
         override val howToUse: String
@@ -33,7 +33,7 @@ object Command : FunctionalCommand {
     override val plugin = Main.plugin
     override val arguments = Arg.values()
 
-    override fun isSimplePermission() = ConfigClass().simplePermission
+    override fun isSimplePermission() = ConfigClass.simplePermission()
 
     override fun commanding(data: CommandData, args: Array<out String>) {
         if (!data.valid) return
@@ -41,9 +41,14 @@ object Command : FunctionalCommand {
 
         when (data.argument) {
             null -> plugin.name.toPlayer(player)
-            Arg.cmd1 -> {}
-            Arg.cmd2 -> {}
-            Arg.cmd3 -> {}
+
+            Arg.list -> ShopListGUI(player)
+            Arg.create -> {
+                val name = args[1]
+                val icon = player.inventory.itemInMainHand.type
+                ShopClass.create(player, name, icon)
+            }
+
         }
         return
     }
@@ -62,17 +67,8 @@ object Command : FunctionalCommand {
                 0 -> Arg.values().add(data.sender, list, last, this)
             }
             /** Other argument */
-            Arg.cmd1 -> when(lastIndex) {
+            Arg.create -> when(lastIndex) {
                 1 -> argument.add(list, last, lastIndex)
-            }
-            Arg.cmd2 -> when(lastIndex) {
-                1 -> argument.add(list, last, lastIndex)
-                2 -> argument.argList(lastIndex).add(list, last)
-            }
-            Arg.cmd3 -> when(lastIndex) {
-                1 -> argument.add(list, last, lastIndex)
-                2 -> argument.argList(lastIndex).add(list, last)
-                3 -> argument.add(list, last, lastIndex)
             }
         }
 

@@ -3,12 +3,12 @@ package kr.kro.minestar.shop.gui
 import kr.kro.minestar.shop.Main
 import kr.kro.minestar.shop.value.FolderValue
 import kr.kro.minestar.utility.gui.GUI
+import kr.kro.minestar.utility.inventory.InventoryUtil
 import kr.kro.minestar.utility.item.display
 import kr.kro.minestar.utility.item.flagAll
 import kr.kro.minestar.utility.material.item
 import kr.kro.minestar.utility.string.remove
 import kr.kro.minestar.utility.string.unColor
-import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
@@ -17,12 +17,11 @@ import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class ShopList(override val player: Player) : GUI() {
+class ShopListGUI(override val player: Player) : GUI() {
     override val plugin = Main.plugin
     private val shopList = FolderValue.shopFolder().listFiles()
-    private val guiSize = shopList.size / 9 + 9
 
-    override val gui = Bukkit.createInventory(null, guiSize, "[상점 목록]")
+    override val gui = InventoryUtil.gui(6, "상점 목록")
 
     init {
         openGUI()
@@ -48,6 +47,6 @@ class ShopList(override val player: Player) : GUI() {
         if (e.click != ClickType.LEFT) return
         val clickItem = e.currentItem ?: return
         val name = clickItem.display().unColor()
-        Shop(player, name)
+        ShopGUI(player, name)
     }
 }

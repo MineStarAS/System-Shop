@@ -2,7 +2,11 @@ package kr.kro.minestar.shop
 
 import kr.kro.minestar.utility.item.Head
 import kr.kro.minestar.utility.main.FunctionalJavaPlugin
+import kr.kro.minestar.utility.string.StringColor
+import kr.kro.minestar.utility.string.script
+import kr.kro.minestar.utility.string.toPlayer
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 
 class Main : FunctionalJavaPlugin() {
     companion object {
@@ -12,7 +16,7 @@ class Main : FunctionalJavaPlugin() {
 
     override fun onEnable() {
         plugin = this
-        prefix = "§Shop"
+        prefix = "§9Shop"
         head = Head(this)
 //        saveResource("headItem.yml", true)
         getCommand("shop")?.setExecutor(Command)
@@ -24,4 +28,6 @@ class Main : FunctionalJavaPlugin() {
         } catch (_: Exception) {
         }
     }
+
+    fun String.warningScript(player: Player) = this.script(prefix, StringColor.RED).toPlayer(player)
 }
