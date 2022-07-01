@@ -21,15 +21,15 @@ class CommodityItemEditGUI(override val player: Player, private val shopGUI: Sho
     private enum class Button(override val line: Int, override val number: Int, override val item: ItemStack) : Slot {
         CLEAR_COMMODITY_ITEM(0, 6, Main.head.item(9397, Material.RED_CONCRETE).display("§c[§f아이템 삭제§c]")),
 
-        SET_BUY_PRICE(1, 0, Main.head.item(9944, Material.LIME_CONCRETE).display("§a[§f판매 가격 설정§a]")),
-        SET_BUY_CURRENCY(1, 1, Main.head.item(9943, Material.LIME_CONCRETE).display("§a[§f판매 화폐 설정§a]")),
-        CLEAR_BUY_PRICE(1, 2, Main.head.item(9404, Material.RED_CONCRETE).display("§c[§f판매 가격 삭제§c]")),
-        CLEAR_BUY_CURRENCY(1, 3, Main.head.item(9403, Material.RED_CONCRETE).display("§c[§f판매 화폐 삭제§c]")),
+        SET_BUY_PRICE(1, 0, Main.head.item(9944, Material.LIME_CONCRETE).display("§a[§f구매 가격 설정§a]")),
+        SET_BUY_CURRENCY(1, 1, Main.head.item(9943, Material.LIME_CONCRETE).display("§a[§f구매 화폐 설정§a]")),
+        CLEAR_BUY_PRICE(1, 2, Main.head.item(9404, Material.RED_CONCRETE).display("§c[§f구매 가격 삭제§c]")),
+        CLEAR_BUY_CURRENCY(1, 3, Main.head.item(9403, Material.RED_CONCRETE).display("§c[§f구매 화폐 삭제§c]")),
 
-        SET_SELL_PRICE(1, 4, Main.head.item(8955, Material.BLUE_CONCRETE).display("§a[§f구매 가격 설정§a]")),
-        SET_SELL_CURRENCY(1, 5, Main.head.item(8971, Material.BLUE_CONCRETE).display("§a[§f구매 화폐 설정§a]")),
-        CLEAR_SELL_PRICE(1, 6, Main.head.item(9387, Material.RED_CONCRETE).display("§c[§f구매 가격 삭제§c]")),
-        CLEAR_SELL_CURRENCY(1, 7, Main.head.item(9403, Material.RED_CONCRETE).display("§c[§f구매 화폐 삭제§c]")),
+        SET_SELL_PRICE(1, 4, Main.head.item(8955, Material.BLUE_CONCRETE).display("§9[§f판매 가격 설정§9]")),
+        SET_SELL_CURRENCY(1, 5, Main.head.item(8971, Material.BLUE_CONCRETE).display("§9[§f판매 화폐 설정§9]")),
+        CLEAR_SELL_PRICE(1, 6, Main.head.item(9387, Material.RED_CONCRETE).display("§c[§f판매 가격 삭제§c]")),
+        CLEAR_SELL_CURRENCY(1, 7, Main.head.item(9403, Material.RED_CONCRETE).display("§c[§f판매 화폐 삭제§c]")),
 
         GO_TO_BACK_GUI(1, 8, Main.head.item(9982, Material.LIGHT_GRAY_CONCRETE).display("§7[§f뒤로 가기§7]")),
         ;
@@ -114,14 +114,16 @@ class CommodityItemEditGUI(override val player: Player, private val shopGUI: Sho
             EditType.BUY_PRICE -> {
                 if (long < 0) return "0 보다 작을 수 없습니다.".warningScript(player)
                 if (commodityItem.sellPrice().price != null)
-                    if (long < commodityItem.sellPrice().price!!) return "판매 가격보다 작을 수 없습니다.".warningScript(player)
+                    if (long < commodityItem.sellPrice().price!!)
+                        "판매 가격보다 작을 경우 화폐 복사가 일어날 수 있으니,\n 주의하시기 바랍니다.".warningScript(player)
                 commodityItem.buyPrice(long)
             }
 
             EditType.SELL_PRICE -> {
                 if (long < 0) return "0 보다 작을 수 없습니다.".warningScript(player)
                 if (commodityItem.buyPrice().price != null)
-                    if (long > commodityItem.buyPrice().price!!) return "구매 가격보다 클 수 없습니다.".warningScript(player)
+                    if (long > commodityItem.buyPrice().price!!)
+                        "구매 가격보다 클 경우 화폐 복사가 일어날 수 있으니,\n 주의하시기 바랍니다.".warningScript(player)
                 commodityItem.sellPrice(long)
             }
 

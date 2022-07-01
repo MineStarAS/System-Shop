@@ -34,7 +34,7 @@ class TradeGUI(override val player: Player, private val shopGUI: ShopGUI, privat
         SELL_16(2, 3, Main.head.item(8955, Material.BLUE_CONCRETE).display("§9[§f16개 판매§9]").amount(16)),
         SELL_32(2, 4, Main.head.item(8955, Material.BLUE_CONCRETE).display("§9[§f32개 판매§9]").amount(32)),
         SELL_64(2, 5, Main.head.item(8955, Material.BLUE_CONCRETE).display("§9[§f64개 판매§9]").amount(64)),
-        SELL_ALL(2, 7, Main.head.item(8973, Material.LIME_CONCRETE).display("§9[§f최대 판매§9]")),
+        SELL_ALL(2, 7, Main.head.item(8973, Material.BLUE_CONCRETE).display("§9[§f최대 판매§9]")),
 
         GO_TO_BACK_GUI(2, 8, Main.head.item(9982, Material.LIGHT_GRAY_CONCRETE).display("§7[§f뒤로 가기§7]")),
         ;
@@ -54,33 +54,32 @@ class TradeGUI(override val player: Player, private val shopGUI: ShopGUI, privat
 
         setItems(Button.values())
 
-        gui.setItem(4, commodityItem.item())
+        gui.setItem(4, commodityItem.showcaseItem())
+        gui.setItem(9 + 8, playerPurseItem())
     }
 
     override fun setItems(slots: Array<out Slot>) {
         for (slot in slots) {
             if (slot !is Button) continue
-            slot.item.clearLore()
+            val item = slot.item.clone()
+            item.clearLore()
             when (true) {
                 slot.name.contains("BUY") -> {
                     val amount = if (slot.name.contains("ALL")) maxBuyAmount()
                     else slot.item.amount
 
-                    slot.item.addBuyLore(amount)
+                    item.addBuyLore(amount)
                 }
 
                 slot.name.contains("SELL") -> {
-                    val amount = if (slot.name.contains("ALL")) {
-                        player.inventory.howManyHasSameItem(commodityItem.item()!!)
-                    }
+                    val amount = if (slot.name.contains("ALL")) player.inventory.howManyHasSameItem(commodityItem.item()!!)
                     else slot.item.amount
-                    slot.item.addSellLore(amount)
+                    item.addSellLore(amount)
                 }
 
-                else -> {
-                    setItem(slot)
-                }
+                else -> {}
             }
+            gui.setItem(slot.getIndex(), item)
         }
     }
 
@@ -93,7 +92,7 @@ class TradeGUI(override val player: Player, private val shopGUI: ShopGUI, privat
         if (e.click != ClickType.LEFT) return
         val clickItem = e.currentItem ?: return
 
-        when (getSlot(clickItem, Button.values())) {
+        when (getSlotByDisplay(clickItem, Button.values())) {
             Button.BUY_1 -> buy(1)
             Button.BUY_5 -> buy(5)
             Button.BUY_16 -> buy(16)
@@ -190,5 +189,28 @@ class TradeGUI(override val player: Player, private val shopGUI: ShopGUI, privat
         val currency = commodityItem.sellPrice().currency!!
 
         item.addLore("§7총 ${(price * amount).addComma()} $currency")
+    }
+
+    private fun playerPurseItem(): ItemStack {
+        val item = Main.head.item(player)
+        val buyCurrency = commodityItem.buyPrice().currency
+        val sellCurrency = commodityItem.sellPrice().currency
+        item.display("§e${player.name} §6소지금")
+        if (buyCurrency == null && sellCurrency == null) return item
+        if (buyCurrency == sellCurrency) {
+            item.addLore(" ")
+            item.addLore("${playerPurse.currencyAmount(buyCurrency!!)} §6$buyCurrency")
+        } else {
+            if (buyCurrency != null) {
+                item.addLore(" ")
+                item.addLore("${playerPurse.currencyAmount(buyCurrency)} §6$buyCurrency")
+            }
+            if (sellCurrency != null) {
+                item.addLore(" ")
+                item.addLore("${playerPurse.currencyAmount(sellCurrency)} §6$sellCurrency")
+            }
+        }
+
+        return item
     }
 }

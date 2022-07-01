@@ -25,7 +25,7 @@ class ShopGUI(override val player: Player, name: String) : GUI() {
     private enum class Button(override val line: Int, override val number: Int, override val item: ItemStack) : Slot {
         PREVIOUS_PAGE(5, 0, Main.head.item(8902, Material.BLUE_CONCRETE).display("§9[§f이전 페이지§9]")),
         NEXT_PAGE(5, 8, Main.head.item(8899, Material.BLUE_CONCRETE).display("§9[§f다음 페이지§9]")),
-        PAGE_NUMBER(5, 4, Main.head.item(11504, Material.GRAY_CONCRETE).display("§7[§f현재 페이지§7]")),
+        PAGE_NUMBER(5, 4, Main.head.item(11504, Material.LIGHT_GRAY_CONCRETE).display("§7[§f현재 페이지§7]")),
         ;
     }
 
@@ -110,7 +110,7 @@ class ShopGUI(override val player: Player, name: String) : GUI() {
             Button.PAGE_NUMBER -> {}
 
             null -> {
-                if (clickType == ClickType.LEFT) CommodityItem(yamlFile, yaml, page, e.slot)
+                if (clickType == ClickType.LEFT) TradeGUI(player, this, CommodityItem(yamlFile, yaml, page, e.slot))
                 if (clickType == ClickType.SHIFT_LEFT) if (player.isOp) CommodityItemEditGUI(player, this, CommodityItem(yamlFile, yaml, page, e.slot))
             }
         }
